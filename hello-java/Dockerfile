@@ -2,6 +2,8 @@ FROM   registry.access.redhat.com/ubi8/ubi:8.0
 
 MAINTAINER   Red Hat Training <training@redhat.com>
 
+LABEL io.openshift.expose-services="8080:http"
+
 # command line options to pass to the JVM
 ENV	  JAVA_OPTIONS -Xmx512m
 
@@ -17,12 +19,12 @@ ADD   https://github.com/RedHatTraining/DO288-apps/releases/download/OCP-4.1-1/h
 
 COPY  run-app.sh /opt/app-root/bin/
 
-RUN   chown -R wildfly:wildfly /opt/app-root && \
-      chmod -R 700 /opt/app-root
+RUN   chgrp -R 0 /opt/app-root && \
+      chmod -R g=u /opt/app-root
 
 EXPOSE 8080
 
-USER  wildfly
+USER  1001
 
 # Run the fat JAR
 CMD   /opt/app-root/bin/run-app.sh
