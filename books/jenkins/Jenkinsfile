@@ -62,7 +62,7 @@ pipeline {
                 //TODO: Create a new app and expose the service
                 sh '''
                         oc project ${DEV_PROJECT}
-                        oc new-app --name books nodejs:8~${APP_GIT_URL} \
+                        oc new-app --as-deployment-config --name books nodejs:8~${APP_GIT_URL} \
                         --build-env npm_config_registry=${NEXUS_SERVER} \
                         --context-dir ${APP_NAME}
 
@@ -130,7 +130,7 @@ pipeline {
                 //TODO: Create a new app in stage using the books:stage image stream and expose the service
                 sh '''
                       oc project ${STAGE_PROJECT}
-                      oc new-app --name books -i books:stage
+                      oc new-app --as-deployment-config --name books -i books:stage
                       oc expose svc/${APP_NAME}
                    '''
             }
