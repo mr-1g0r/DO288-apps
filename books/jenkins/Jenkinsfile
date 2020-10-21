@@ -62,7 +62,7 @@ pipeline {
                 //TODO: Create a new app and expose the service
                 sh '''
                         oc project ${DEV_PROJECT}
-                        oc new-app --as-deployment-config --name books nodejs:8~${APP_GIT_URL} \
+                        oc new-app --as-deployment-config --name books nodejs:12~${APP_GIT_URL} \
                         --build-env npm_config_registry=${NEXUS_SERVER} \
                         --context-dir ${APP_NAME}
 
